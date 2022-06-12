@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./js/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="root">
+        <!-- 1.绑定control键加y键的抬起事件 事件回调函数为show-->
+        <!-- 2.将输入框的值于name双向绑定-->
+        <input type="text" @keyup.ctrl.y="show" v-model="name">
+
+        <div  @click="baidu">
+            <!-- 绑定点击事件并阻止默认行为，阻止冒泡， 事件回调baidu -->
+            <a href="http://www.baidu.com" v-on:click.prevent.stop="baidu">Bai Du</a>
+        </div>
+    </div>
+</body>
+<script>
+    // 实例vue
+    var vm = new Vue({
+        el:'#root',
+        data:{
+            name:'apache'
+        },
+        methods: {
+            show(e){
+                console.log(e.target.value)
+            },
+            baidu(e){
+                console.log(e.target)
+            }
+        }
+    })
+</script>
+</html>

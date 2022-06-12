@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Examples</title>
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <script type="text/javascript" src="js/vue.js"></script>
+    </head>
+    <body>
+    	<div id="root">
+            <h1>插值语法</h1>
+    		<h2>{{msg}}</h2> <!-- 插值语法 -->
+    		<h2>{{name.toUpperCase()}}</h2> <!-- 插值语法 -->
+            <hr>
+
+            <h1>指令语法</h1>
+            <span>单向数据绑定(v-bind)</span>
+            <input type="text" :value="target"><br><!-- 单向数据绑定 -->
+            <span>双向数据绑定(v-model)</span>
+            <input type="text" v-model="target"><!-- 双向数据绑定 -->
+    	</div>
+
+    </body>
+    <script>
+    	new Vue({
+    		el:'#root',     //绑定容器
+    		data:{          //定义数据
+    			msg:'好好学习',
+    			name:'vue',
+                target:'天天向上'
+    		}
+    	})
+    </script>
+</html>
