@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./js/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="root">
+        <h2>今天天气很{{info}}</h2>
+        <button @click="isHot = !isHot">点击切换</button>
+    </div>
+</body>
+<script>
+var vm = new Vue({
+    el: '#root',
+    data: {
+        isHot: false
+    },
+    computed: {
+        info(){
+        return this.isHot ? '炎热' : '凉爽'
+        }  
+    },
+    watch: {        //内部属性写法
+        info:{
+            handler(newValue,oldValue){
+                console.log(`info被修改了，原来是${oldValue},现在是${newValue}`)
+            },
+            immediate:true,     //立即执行一次handler，不比等到属性发生改变
+            // deep: true       //监听属性内部是否发生修改
+        },
+        // 简化写法
+        isHot(newValue,oldValue){
+            console.log(`isHot被修改了，原来是${oldValue},现在是${newValue}`)
+        }
+    }
+})
+
+    // 后期添加写法
+    // vm.$watch('info',function(newValue,oldValue){
+    //     console.log(`info被修改了，原来是${oldValue},现在是${newValue}`)
+    // })
+</script>
+</html>
