@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./js/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="root">
+        姓：<input type="text" v-model="firstName"><br>
+        名：<input type="text" v-model="lastName"><br>
+        <span>全名：{{fullName}}</span><br>     <!-- 首次调用计算属性 -->
+        <span>全名：{{fullName}}</span><br>     <!-- 第二次调用计算属性不会执行getter -->
+        <span>全名：{{name}}</span><br>         <!-- 简写形式 -->
+    </div>
+</body>
+<script>
+    var vm = new Vue({
+        el:'#root',
+        data:{
+            firstName:'张',
+            lastName:'三'
+        },
+        computed:{      
+            fullName:{      //定义一个计算属性fullName
+                get(){      //getter
+                    console.log('getter')
+                    return this.firstName + '-' + this.lastName
+                },
+                set(value){     //setter
+                    let arr = value.split('-');
+                    this.firstName = arr[0]
+                    this.lastName = arr[1]
+                }
+            },
+            // 简写形式,当计算属性只需要读不需要改时，可以简写成一个方法。这个方法就相当于getter
+            name(){
+                return this.firstName + '-' + this.lastName
+            }
+        }
+    })
+</script>
+</html>
