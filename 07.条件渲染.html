@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./js/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="root">
+        <h2>当前n的值是:{{n}}</h2>
+        <button @click="n++">点我n+1</button>
+        <div v-show="false">HTML</div>
+        <div v-if="n == 1">HTML</div>
+        <div v-else-if="n == 2">CSS</div>
+        <div v-else-if="n == 3">JavaScript</div>
+        <div v-else>快点学习吧</div>
+    </div>
+</body>
+<script>
+    var vm = new Vue({
+        el:'#root',
+        data:{
+            n:0
+        }
+    })
+</script>
+</html>
