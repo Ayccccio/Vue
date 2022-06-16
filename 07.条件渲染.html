@@ -16,6 +16,11 @@
         <div v-else-if="n == 2">CSS</div>
         <div v-else-if="n == 3">JavaScript</div>
         <div v-else>快点学习吧</div>
+
+        <!-- template不会渲染到DOM,template里的DOM会根据v-if的条件判断是否渲染 -->
+        <template v-if="n == 3">
+            <div>JavaScript</div>
+        </template>
     </div>
 </body>
 <script>
