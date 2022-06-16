@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./js/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="root">
+        <h2>人员列表</h2>
+        <input type="text" placeholder="请输入查询的名字" v-model="keyword"> 
+        <button @click="sortState=1">按年龄升序</button> 
+        <button @click="sortState=2">按年龄降序</button> 
+        <button @click="sortState=0">原顺序</button> 
+        <ul>
+            <!-- v-for循环遍历person添加DOM -->
+            <!-- p:当前人员， index:遍历索引，person:遍历的人员数组 -->
+            <li v-for="(p,index) in filPerson" :key="p.id">   <!-- key的作用用于vue虚拟DOM中进行对比，提升DOM复用性 -->
+                <!-- 读取person数据 -->
+                {{p.name}} - {{p.age}} - {{p.sex}}
+                <input type="text">
+            </li>
+        </ul>
+    </div>
+</body>
+<script>
+    var vm = new Vue({
+        el:'#root',
+        data:{
+            person:[    //人员数据
+                {id:001,name:'马冬梅',age:19, sex: '男'},
+                {id:002,name:'周冬雨',age:25, sex: '男'},
+                {id:003,name:'周杰伦',age:20, sex: '男'},
+                {id:004,name:'张杰',age:30, sex: '男'}
+            ],
+            keyword:'',
+            sortState: 0    //通过改变sortState属性来判断那种排序。0：原顺序，1：升序，2：降序
+        },
+        computed: {
+            filPerson(){    //模板渲染计算属性，避免原数据person修改后无法还原
+                // 先将数据进行过滤
+                let arr = this.person.filter((item,index,arr)=>{
+                    return item.name.indexOf(this.keyword,0) > -1
+                })
+
+                //将过滤的数据按sortState来进行排序
+                if(this.sortState){
+                    arr.sort((a,b)=>{
+                        return this.sortState == 1 ? a.age - b.age : b.age - a.age
+                    })
+                }
+                return arr
+            }
+        }
+    })
+</script>
+</html>
