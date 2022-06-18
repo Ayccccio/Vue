@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./js/vue.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/dayjs/1.11.3/dayjs.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="root">
+        <p >现在的时间是 {{d | fomatDate}}</p>
+        <p >现在的时间是 {{d | fomatDate | mid}}</p>
+    </div>
+</body>
+<script>
+    // 全局配置过滤器
+    Vue.filter('mid',function(val){
+        return val.slice(0,4)
+    })
+    
+    var vm = new Vue({
+        el:'#root',
+        data:{
+            d:Date.now()
+        },
+        filters: {  //配置局部过滤器
+            fomatDate(val){  //Vue会自动将模板中的数据传给val
+                return dayjs(this.d).format('YYYY年-MM月-DD日 HH:mm:ss')
+            }
+        }
+    })
+</script>
+</html>
