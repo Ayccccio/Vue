@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+
+    // 定义一个观察者类
+    class Observer{
+        // 传递一个对象，遍历对象，将对象身上的属性defineProperty到自身上来
+        constructor(obj){
+            for (const key in obj) {
+                Object.defineProperty(this,key,{
+                    get(){
+                        return obj[key]
+                    },
+                    set(val){
+                        obj[key] = val
+                    }
+                })
+            }
+        }
+    }
+
+    var data = {
+        name: '张三',
+        age: 18
+    }
+
+    // 将_data与data进行数据绑定达到监视data的目的
+    _data = new Observer(data);
+
+    // 加入这是Vue类
+    var vm = {}
+
+    // 在Vue类中添加_data属性，并将实例Observer的_data赋值给data和vm._data
+    // 这就完成了
+    vm._data = data = _data
+</script>
+</html>
