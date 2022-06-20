@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./js/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="root">
+        <p>当前n值:{{n}}</p>
+        <p>n值放大10倍: <span v-big="n"></span></p>
+        <button @click="n++" v-f-bind="n">点击n+1</button>
+        <hr>
+        <input type="text" >
+    </div>
+</body>
+<script>
+    var vm = new Vue({
+        el: '#root',
+        data: {
+            n: 0,
+            appendElement: []
+        },
+        directives: {
+            big(element,binding){
+                element.innerHTML = binding.value * 10
+            },
+            'f-bind':{
+                bind(element, binding){
+                    this.appendElement[this.n] = document.createElement('input')
+                    element.parentElement.appendChild(this.appendElement[this.n])
+                },
+                inserted(element, binding){
+                    this.appendElement[this.n].focus()
+                },
+                update(element, binding){
+                    this.appendElement[this.n] = document.createElement('input')
+                    element.parentElement.appendChild(this.appendElement[this.n])
+                    this.appendElement.forEach(element => {
+                        element.innerHTML = binding.value * 10
+                    });
+                },
+            }
+        }
+    })
+</script>
+</html>

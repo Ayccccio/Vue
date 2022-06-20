@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./js/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="root">
+        <!-- v-text: 将标签里的内容设置成值的内容 -->
+        <!-- v-once: 标签只解析一次,标签依赖的数据发生变化也不会重新解析 -->
+        <span v-text="text" v-once></span>
+
+        <!-- v-html: 将值的内容解析成html设置给标签的内容 -->
+        <a href="#" v-html="html" >aaa{{html}}</a>
+
+        <!-- v-pre: 不解析当前标签 -->
+        <div v-pre v-text="text">aabbcx{{text}}</div>
+    </div>
+    
+</body>
+<script>
+    var vm = new Vue({
+        el: '#root',
+        data: {
+            text: '这里是Vue集结地',
+            html: '<h2>Hell v-html</h2>'
+        }
+    })
+</script>
+</html>
