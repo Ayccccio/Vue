@@ -11,36 +11,39 @@
     <div id="root">
         <p>当前n值:{{n}}</p>
         <p>n值放大10倍: <span v-big="n"></span></p>
-        <button @click="n++" v-f-bind="n">点击n+1</button>
+        <button @click="n++">点击n+1</button>
         <hr>
-        <input type="text" >
+        <input type="text" v-focus="n">
     </div>
 </body>
 <script>
+    var temp = null;
     var vm = new Vue({
         el: '#root',
         data: {
             n: 0,
             appendElement: []
         },
-        directives: {
+        directives: {       //自定义指令里的this指向window
             big(element,binding){
                 element.innerHTML = binding.value * 10
             },
-            'f-bind':{
-                bind(element, binding){
-                    this.appendElement[this.n] = document.createElement('input')
-                    element.parentElement.appendChild(this.appendElement[this.n])
+            'focus':{
+
+                // 指令与元素进行绑定时调用
+                bind :(element, binding)=>{
+                    element.value = binding.value * 10
                 },
+
+                // 元素插入页面时调用
                 inserted(element, binding){
-                    this.appendElement[this.n].focus()
+                    element.focus();
                 },
+
+                // 所在模板重新解析时调用
                 update(element, binding){
-                    this.appendElement[this.n] = document.createElement('input')
-                    element.parentElement.appendChild(this.appendElement[this.n])
-                    this.appendElement.forEach(element => {
-                        element.innerHTML = binding.value * 10
-                    });
+                    element.focus();
+                    element.value = binding.value * 10
                 },
             }
         }
