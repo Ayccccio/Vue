@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./js/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+<script>
+    var vm = new Vue({
+        el: '#root',
+        data:{
+            a:1
+        },
+        beforeCreate () {
+            console.log('beforeCreate')
+            console.log(this.a)     //undefined     此时Vue还没进行数据监测与数据绑定,没有生成_data,也不能访问data里的属性
+        },
+        created () {
+            console.log('created')
+            console.log(this.a)     //1     Vue完成数据监测与数据绑定
+        },
+        beforeMount () {
+            console.log('beforeMount')      //Vue解析模板生成虚拟DOM,此时还没将虚拟DOM转成真实DOM,页面展示的还是未解析前的
+        },
+        mounted () {
+            console.log('mounted')
+        },
+        beforeUpdate () {
+            console.log('beforeUpdate')
+        },
+        updated () {
+            console.log('updated')
+        },
+        beforeDestory(){
+            console.log('beforeDestory')
+        },
+        destroyed () {
+            console.log('destroyed')
+        }
+    })
+</script>
+</html>
