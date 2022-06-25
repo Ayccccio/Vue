@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,41 +8,56 @@
     <script src="./js/vue.js"></script>
     <title>Document</title>
 </head>
+
 <body>
-    <div id="root"></div>
+    <div id="root">
+        {{a}}
+        <button @click="destory">销毁VM</button>
+    </div>
 </body>
 <script>
     var vm = new Vue({
         el: '#root',
-        data:{
-            a:1
+        data: {
+            a: 1
         },
-        beforeCreate () {
+        methods: {
+            destory(){
+                this.$destroy()
+            }
+        },
+        beforeCreate() {
             console.log('beforeCreate')
             console.log(this.a)     //undefined     此时Vue还没进行数据监测与数据绑定,没有生成_data,也不能访问data里的属性
         },
-        created () {
+        created() {
             console.log('created')
             console.log(this.a)     //1     Vue完成数据监测与数据绑定
         },
-        beforeMount () {
+        beforeMount() {
             console.log('beforeMount')      //Vue解析模板生成虚拟DOM,此时还没将虚拟DOM转成真实DOM,页面展示的还是未解析前的
+            console.log(this.$el.innerHTML = 'aa')  //此时可以操作DOM但是不建议这么做,因为后面Vue会将虚拟DOM转换成真实DOM,导致操作被覆盖.
+            // debugger
         },
-        mounted () {
-            console.log('mounted')
+        mounted() {
+            console.log('mounted')          //此时Vue将虚拟DOM转换成真实DOM,并展示到页面了
+            // debugger                        //此时可以进行:开启定时器,发送网络请求,订阅消息,绑定自定义事件,等初始化操作.
         },
-        beforeUpdate () {
-            console.log('beforeUpdate')
+        beforeUpdate() {
+            console.log('beforeUpdate')     //此时数据时最新的,但是没有重行解析模板,页面的数据还是旧的
         },
-        updated () {
-            console.log('updated')
+        updated() {
+            console.log('updated')          //此时数据和页面都是最新的,页面和数据保持同步
         },
-        beforeDestory(){
-            console.log('beforeDestory')
+        beforeDestroy() {
+            console.log('beforeDestory')    //此时vm中的data,methods...都处于可用状态,
+            console.log(this.a)             //此时可以进行:关闭定时器,取消订阅消息,解绑自定义事件等收尾工作.
+            // debugger
         },
-        destroyed () {
+        destroyed() {
             console.log('destroyed')
         }
     })
 </script>
+
 </html>
