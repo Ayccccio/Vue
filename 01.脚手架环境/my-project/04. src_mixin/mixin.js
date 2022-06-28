@@ -1,6 +1,7 @@
 const address = {
     data(){
         return {
+            name: '李四',
             address:'湖南'
         }
     }
@@ -20,4 +21,14 @@ const color = {
     }
 }
 
-export {address, color}
+const global = {
+    data(){
+        return {
+            global: '全局mixin'
+        }
+    },
+    mounted () {
+        console.log(this)
+    }
+}
+export {address, color, global}

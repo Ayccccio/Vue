@@ -7,15 +7,14 @@
 </template>
 
 <script>
-import {address,color} from '../mixin'
+import {address} from '../mixin'
 export default {
     data(){
-        console.log(this)
         return {
             name: '张三',
             age: 20
         }
     },
-    mixins: [address,color]
+    mixins: [address]
 }
 </script>

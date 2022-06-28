@@ -14,8 +14,5 @@ export default {
         Student
     },
     mixins: [color],
-    mounted () {
-        console.log(this)
-    }
 }
 </script>
