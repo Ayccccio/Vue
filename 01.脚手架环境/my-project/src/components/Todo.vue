@@ -1,7 +1,7 @@
 <template>
     <li>
         <label>
-            <input type="checkbox" :checked="todo.done" @change="checkTodo(todo.id)"/>
+            <input type="checkbox" :checked="todo.done" @change="toggleTodo(todo.id)"/>
             <span>{{todo.name}}</span>
         </label>
         <button class="btn btn-danger" @click="deleteTodo(todo.id)">删除</button>
@@ -13,7 +13,7 @@ export default {
     name: 'Todo',
     props: ['todo','handleTodo'],
     methods: {
-        checkTodo(id){
+        toggleTodo(id){
             this.handleTodo[0](id)
         },
         deleteTodo(id){

@@ -12,6 +12,7 @@ export default {
     methods:{
         addTodo(e){
             this.handleTodo[2]({id:nanoid(), name:e.target.value, done:false})
+            e.target.value = ''
         }
     }
 };

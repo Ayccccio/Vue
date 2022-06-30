@@ -3,51 +3,71 @@
         <div class="todo-container">
             <div class="todo-wrap">
                 <TodoHeader :handleTodo="handleTodo"></TodoHeader>
-                <Todos :todoList='todoList' :handleTodo="handleTodo"></Todos>
-                <TodoFooter></TodoFooter>
+                <Todos :todoList="todoList" :handleTodo="handleTodo"></Todos>
+                <TodoFooter
+                    :todoList="todoList"
+                    :checkAllTodo="checkAllTodo"
+                    :clearTodo="clearTodo"
+                ></TodoFooter>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-    import TodoHeader from './components/TodoHeader.vue'
-    import Todos from './components/Todos.vue'
-    import TodoFooter from './components/TodoFooter.vue'
-    
+import TodoHeader from "./components/TodoHeader.vue";
+import Todos from "./components/Todos.vue";
+import TodoFooter from "./components/TodoFooter.vue";
+
 export default {
-    name: 'App',
+    name: "App",
     components: {
         TodoHeader,
         Todos,
-        TodoFooter
+        TodoFooter,
     },
-    data(){
+    data() {
         return {
             todoList: [
-            {id:'001',name:'吃饭',done:false},
-            {id:'002',name:'睡觉',done:true},
-            {id:'003',name:'学习',done:false}],
-            handleTodo: [this.checkTodo,this.deleteTodo,this.addTodo]
-        }
+                { id: "001", name: "吃饭", done: false },
+                { id: "002", name: "睡觉", done: true },
+                { id: "003", name: "学习", done: false },
+            ],
+            handleTodo: [this.toggleTodo, this.deleteTodo, this.addTodo],
+        };
     },
     methods: {
-        checkTodo(id){
-            this.todoList.forEach(item => {
-                if(item.id == id){
-                    item.done = !item.done
+        // todo单选框点击切换状态
+        toggleTodo(id) {
+            this.todoList.forEach((item) => {
+                if (item.id == id) {
+                    item.done = !item.done;
                 }
-            })
+            });
         },
-        deleteTodo(id){
-            this.todoList = this.todoList.filter(item =>{
-                return item.id != id
-            })
+        // 删除todo
+        deleteTodo(id) {
+            this.todoList = this.todoList.filter((item) => {
+                return item.id != id;
+            });
         },
-        addTodo(obj){
-            this.todoList.unshift(obj)
-        }
-    }
+        // 在todo列表前面插入一个新的todo
+        addTodo(todo) {
+            this.todoList.unshift(todo);
+        },
+        // 取消选中所有todo
+        checkAllTodo(val) {
+            this.todoList.forEach((item) => {
+                item.done = val;
+            });
+        },
+        // 清楚所有已完成todo
+        clearTodo() {
+            this.todoList = this.todoList.filter((item) => {
+                return item.done !== true;
+            });
+        },
+    },
 };
 </script>
 
@@ -96,13 +116,10 @@ body {
     border-radius: 5px;
 }
 
-
 .todo-header input:focus {
     outline: none;
     border-color: rgba(82, 168, 236, 0.8);
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
         0 0 8px rgba(82, 168, 236, 0.6);
 }
-
-
 </style>
