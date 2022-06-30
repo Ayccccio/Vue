@@ -2,7 +2,7 @@
     <div id="root">
         <div class="todo-container">
             <div class="todo-wrap">
-                <TodoHeader></TodoHeader>
+                <TodoHeader :handleTodo="handleTodo"></TodoHeader>
                 <Todos :todoList='todoList' :handleTodo="handleTodo"></Todos>
                 <TodoFooter></TodoFooter>
             </div>
@@ -14,6 +14,7 @@
     import TodoHeader from './components/TodoHeader.vue'
     import Todos from './components/Todos.vue'
     import TodoFooter from './components/TodoFooter.vue'
+    
 export default {
     name: 'App',
     components: {
@@ -27,12 +28,24 @@ export default {
             {id:'001',name:'吃饭',done:false},
             {id:'002',name:'睡觉',done:true},
             {id:'003',name:'学习',done:false}],
-            handleTodo: [this.checkTodo]
+            handleTodo: [this.checkTodo,this.deleteTodo,this.addTodo]
         }
     },
     methods: {
         checkTodo(id){
-            this.todoList.array.forEach(item => item.id !== id);
+            this.todoList.forEach(item => {
+                if(item.id == id){
+                    item.done = !item.done
+                }
+            })
+        },
+        deleteTodo(id){
+            this.todoList = this.todoList.filter(item =>{
+                return item.id != id
+            })
+        },
+        addTodo(obj){
+            this.todoList.unshift(obj)
         }
     }
 };

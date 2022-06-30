@@ -1,11 +1,20 @@
 <template>
     <div class="todo-header">
-        <input type="text" placeholder="请输入你的任务名称，按回车键确认" />
+        <input type="text" placeholder="请输入你的任务名称，按回车键确认" @keyup.enter="addTodo"/>
     </div>
 </template>
 
 <script>
-export default {};
+    import {nanoid} from 'nanoid'
+export default {
+    name: 'TodoHeader',
+    props: ['handleTodo'],
+    methods:{
+        addTodo(e){
+            this.handleTodo[2]({id:nanoid(), name:e.target.value, done:false})
+        }
+    }
+};
 </script>
 
 <style scoped>

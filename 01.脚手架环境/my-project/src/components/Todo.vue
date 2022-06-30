@@ -4,7 +4,7 @@
             <input type="checkbox" :checked="todo.done" @change="checkTodo(todo.id)"/>
             <span>{{todo.name}}</span>
         </label>
-        <button class="btn btn-danger" style="display:none">删除</button>
+        <button class="btn btn-danger" @click="deleteTodo(todo.id)">删除</button>
     </li>
 </template>
 
@@ -15,12 +15,15 @@ export default {
     methods: {
         checkTodo(id){
             this.handleTodo[0](id)
+        },
+        deleteTodo(id){
+            this.handleTodo[1](id)
         }
     }
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 /*item*/
 li {
     list-style: none;
@@ -30,7 +33,10 @@ li {
     border-bottom: 1px solid #ddd;
 }
 li:hover{
-    background-color: rgb(155, 155, 155);
+    background-color: rgba(136, 136, 136, 0.301);
+    button{
+        display: block;
+    }
 }
 li label {
     float: left;
