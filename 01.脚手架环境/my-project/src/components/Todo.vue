@@ -10,8 +10,10 @@
                 >{{todo.name}}
             </span>
             <input 
-                type="text" v-show="todo.isEdit" 
-                @blur="uneditTodo($event,todo.id)" 
+                type="text" 
+                ref="inp"
+                v-show="todo.isEdit"
+                @blur="uneditTodo($event,todo)" 
             />
         </label>
         <button class="btn btn-danger" 
@@ -19,7 +21,7 @@
             >删除
         </button>
         <button class="btn btn-edit" 
-            @click="editTodo($event,todo.id)" 
+            @click="editTodo(todo)" 
             v-show="!todo.isEdit"
             >编辑
         </button>
@@ -37,16 +39,26 @@ export default {
         deleteTodo(id) {
             PubSub.publish("deleteTodo", id);
         },
-        editTodo(e,id) {
-            PubSub.publish("editTodo", id);
-            this.$nextTick(()=>{
-                console.log(e.target)
-                e.target.focus()
+
+        // 编辑按钮点击
+        editTodo(todo) {
+            if(todo.hasOwnProperty('isEdit')){
+                todo.isEdit = true
+            }else{
+                this.$set(todo,'isEdit',true)
+            }
+            this.$refs.inp.value = todo.name
+            this.$nextTick(function(){
+                this.$refs.inp.focus()
             })
         },
-        uneditTodo(e,id) {
-            if(e.target.value)alert('数据不能为空')
-            PubSub.publish("uneditTodo", id,e.target.value);
+
+        // 编辑框失去焦点
+        uneditTodo(e,todo) {
+            if(e.target.value.trim() !== ''){
+                todo.name = e.target.value
+            }
+            todo.isEdit = false
         },
     },
 };
