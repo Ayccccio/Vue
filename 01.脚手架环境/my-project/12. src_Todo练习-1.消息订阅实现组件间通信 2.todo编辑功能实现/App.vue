@@ -73,29 +73,6 @@ export default {
                 return item.done !== true;
             });
         })
-
-        // 编辑edit
-        this.pubidToEditTodo = PubSub.subscribe('editTodo',(_,id)=>{
-            this.todoList.forEach((item)=>{
-                if(item.id == id){
-                    if(item.hasOwnProperty('isEdit')){
-                        item.isEdit = true
-                    }else{
-                        this.$set(item,'isEdit',true)
-                    }
-                }
-            })
-        })
-
-        // 取消编辑edit
-        this.pubidToEditTodo = PubSub.subscribe('uneditTodo',(_,id,value)=>{
-            this.todoList.forEach((item)=>{
-                if(item.id == id){
-                    item.isEdit = false
-                    item.name = value
-                }
-            })
-        })
     },
     beforeDestroy(){
         // 取消消息订阅
