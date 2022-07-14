@@ -20,9 +20,11 @@ export default {
     methods:{
         getUsers(){
             this.$bus.$emit('updateState',1)
-            axios.get(`https://api.github.com/search/users?q=${this.keyWord}`).then(
+            this.$bus.$emit('clearUsers')
+            axios.get(`https://api.github.com/search/users?q=${this.keyword}`).then(
                 response => {
                     this.$bus.$emit('getUsers',response.data)
+                    this.$bus.$emit('updateState',3)
                 },
                 error =>{
                     this.$bus.$emit('updateState',2)
