@@ -1,24 +1,18 @@
 <template>
     <div class="container">
         <Search></Search>
-        <div class="row">
-            <User></User>
-            <User></User>
-            <User></User>
-            <User></User>
-            <User></User>
-        </div>
+        <List></List>
     </div>
 </template>
 
 <script>
 import Search from './components/Search.vue'
-import User from './components/User.vue'
+import List from './components/List.vue'
 export default {
     name: 'App',
     components:{
         Search,
-        User
+        List
     }
 };
 </script>
