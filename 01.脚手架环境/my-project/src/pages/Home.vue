@@ -12,7 +12,11 @@
                             <router-link active-class="active" to="/home/message" class="list-group-item" href="./home-message.html">Message</router-link>
                         </li>
                     </ul>
-                    <router-view></router-view>
+
+                    <!-- 让News组件失活时不被销毁 -->
+                    <keep-alive include="News,Message">     
+                        <router-view></router-view>
+                    </keep-alive>
                 </div>
             </div>
         </div>

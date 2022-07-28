@@ -6,7 +6,7 @@
                 <!-- <router-link :to='`/home/message/detail?id=${m.id}&title=${m.title}`' href="/message1">{{m.title}}</router-link> -->
 
                 <!-- query传参的对象写法 -->
-                <router-link 
+                <!-- <router-link 
                 :to="{
                     path:'/home/message/detail',
                     query:{
@@ -15,9 +15,24 @@
                     }
                 }"
                 >{{m.title}}
-                </router-link>
+                </router-link> -->
+
+                <!-- params传参字符串写法 -->
+                <!-- <router-link :to='`/home/message/detail/${m.id}/${m.title}`' href="/message1">{{m.title}}</router-link> -->
+
+                <!-- params传参对象写法 -->
+                <router-link
+                    :to="{
+                    name:'detail',      //params传参对象写法不能用path必需用name
+                    params:{
+                        id: m.id,
+                        title: m.title
+                    }
+                }"
+                >{{m.title}}</router-link>
+
             </li>
-            <hr>
+            <hr />
             <router-view></router-view>
         </ul>
     </div>
@@ -35,6 +50,15 @@ export default {
             ],
         };
     },
+    // 组件激活生命周期钩子
+    // activated(){
+    //     console.log('message激活了')
+    // },
+
+    // 组件失活生命周期钩子
+    // deactivated(){
+    //     console.log('message失活了')
+    // }
 };
 </script>
 

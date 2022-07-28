@@ -8,15 +8,23 @@
 <script>
 export default {
     name:'Detail',
-    // props:['id','title'],
-    computed:{
-        id(){
-            return this.$route.query.id
-        },
-        title(){
-            return this.$route.query.title
-        }
-    }
+    props:['id','title'],       //接收路由传递过来的props
+    // computed:{
+    //     id(){
+    //         // 接收query参数
+    //         // return this.$route.query.id
+
+    //         // 接收params参数
+    //         return this.$route.params.id
+    //     },
+    //     title(){
+    //         // 接收query参数
+    //         // return this.$route.query.title
+
+    //         // 接收params参数
+    //         return this.$route.params.title
+    //     }
+    // }
 }
 </script>
 
