@@ -9,7 +9,25 @@
 </template>
 
 <script>
-export default {};
+export default {
+    name: "About",
+    // 
+    beforeRouteEnter(to, from, next) {
+        if (to.meta.isAuth) {
+            if (JSON.parse(localStorage.getItem("login"))) {
+                next();
+            } else {
+                console.log("你没有登陆,登陆后才能访问");
+            }
+        }else{
+            next()
+        }
+    },
+    beforeRouteLeave(to,from,next){
+        console.log('about路由离开')
+        next()
+    }
+};
 </script>
 
 <style>

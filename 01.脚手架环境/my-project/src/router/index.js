@@ -9,12 +9,13 @@ import Detail from '../pages/Detail.vue'
 
 // 构建路由器
 const router = new VueRouter({
+    mode:'history',
     routes: [
         // 一级路由
         {
             path: '/about',
             component: About,
-            meta: { title: '关于' }
+            meta: {isAuth:true, title: '关于' }
         },
         {
             path: '/home',
@@ -25,12 +26,22 @@ const router = new VueRouter({
                 {
                     path: 'news',
                     component: News,
-                    meta: {isAuth:true, title: '新闻' },
+                    meta: { isAuth: true, title: '新闻' },
+                    // 独享守卫
+                    beforeEnter(to, from, next) {
+                        if (to.meta.isAuth) {   //鉴权
+                            if (JSON.parse(localStorage.getItem('login'))) {    //判断是否登录
+                                next()
+                            } else {
+                                console.log('你没有登陆,登陆后才能访问')
+                            }
+                        }
+                    }
                 },
                 {
                     path: 'message',
                     component: Message,
-                    meta: {isAuth:true, title: '消息' },
+                    meta: { isAuth: true, title: '消息' },
                     children: [
                         // 三级路由
                         {
@@ -38,7 +49,7 @@ const router = new VueRouter({
                             // path:'detail',
                             path: 'detail/:id/:title',   //给params传参占位
                             component: Detail,
-                            meta: {title: '消息详情' },
+                            meta: { title: '消息详情' },
 
                             // props的对象形式,会将对象作为key-value传递到组件
                             // props:{
@@ -66,21 +77,21 @@ const router = new VueRouter({
 
 // 全局路由守卫,路由开始之前
 // 验证权限
-router.beforeEach((to, from, next) => {
-    if(to.meta.isAuth){     //判断是否需要验证权限
-        if(JSON.parse(localStorage.getItem('login'))){  //验证权限
-            next()
-        }else{
-            console.log('你没有登陆,登陆后才能访问')
-        }
-    }else{
-        next()  //往下执行
-    }
-})
+// router.beforeEach((to, from, next) => {
+//     if (to.meta.isAuth) {     //鉴权
+//         if (JSON.parse(localStorage.getItem('login'))) {  //验证权限
+//             next()
+//         } else {
+//             console.log('你没有登陆,登陆后才能访问')
+//         }
+//     } else {
+//         next()  //往下执行
+//     }
+// })
 
 // 全局路由守卫,路由结束后
 // 修改网页标题
-router.afterEach( (to, from) => {
+router.afterEach((to, from) => {
     document.title = to.meta.title
 })
 
