@@ -7,15 +7,25 @@ import Message from '../pages/Message.vue'
 import Detail from '../pages/Detail.vue'
 
 
+const routerPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+    return routerPush.call(this, location).catch(error => error)
+}
+
+const routerReplace = VueRouter.prototype.replace
+VueRouter.prototype.replace = function replace(location) {
+    return routerReplace.call(this, location).catch(error => error)
+}
+
 // 构建路由器
 const router = new VueRouter({
-    mode:'history',
+    mode: 'history',
     routes: [
         // 一级路由
         {
             path: '/about',
             component: About,
-            meta: {isAuth:true, title: '关于' }
+            meta: { isAuth: true, title: '关于' }
         },
         {
             path: '/home',
@@ -77,22 +87,24 @@ const router = new VueRouter({
 
 // 全局路由守卫,路由开始之前
 // 验证权限
-// router.beforeEach((to, from, next) => {
-//     if (to.meta.isAuth) {     //鉴权
-//         if (JSON.parse(localStorage.getItem('login'))) {  //验证权限
-//             next()
-//         } else {
-//             console.log('你没有登陆,登陆后才能访问')
-//         }
-//     } else {
-//         next()  //往下执行
-//     }
-// })
+router.beforeEach((to, from, next) => {
+    if (to.meta.isAuth) {     //鉴权
+        if (JSON.parse(localStorage.getItem('login'))) {  //验证权限
+            next()
+        } else {
+            console.log('你没有登陆,登陆后才能访问')
+        }
+    } else {
+        next()  //往下执行
+    }
+})
 
 // 全局路由守卫,路由结束后
 // 修改网页标题
 router.afterEach((to, from) => {
     document.title = to.meta.title
 })
+
+
 
 export default router

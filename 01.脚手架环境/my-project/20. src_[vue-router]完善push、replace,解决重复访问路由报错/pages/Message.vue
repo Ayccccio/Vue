@@ -30,7 +30,8 @@
                     }
                 }"
                 >{{m.title}}</router-link>
-
+                <button @click="push(m)">push访问</button>
+                <button @click="replace(m)">replace访问</button>
             </li>
             <hr />
             <router-view></router-view>
@@ -49,6 +50,26 @@ export default {
                 { id: "003", title: "消息003" },
             ],
         };
+    },
+    methods:{
+        push(m){
+            this.$router.push({
+                name:'detail',
+                params:{
+                    id: m.id,
+                    title: m.title
+                }
+            })
+        },
+        replace(m){
+            this.$router.replace({
+                name:'detail',
+                params:{
+                    id: m.id,
+                    title: m.title
+                }
+            })
+        }
     },
     // 组件激活生命周期钩子
     // activated(){
